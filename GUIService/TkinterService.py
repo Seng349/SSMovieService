@@ -14,7 +14,8 @@ class TkinterMainInterface(object):
 		# First Line
 		aFirstLineFrame = Frame(self.mInterface);
 		aFirstLineLabel = Label(aFirstLineFrame, text = "The Movie File: ", height = 60)
-		aFirstLineLabel.pack();
+		aFirstLineLabel.pack(side = LEFT);
+		
 		aFirstLineFrame.pack(fill = BOTH)
 
 	def show(self):
