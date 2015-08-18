@@ -3,7 +3,10 @@ from Tkinter import *;
 import tkFileDialog
 
 class TkinterMainInterface(object):
-	mInterface = 0;
+	mInterface       = 0;
+	mOriginalPathVar = 0;
+	mStorePathVar    = 0;
+	mSelectMovieType = 0;
 
 	"""docstring for TkinterMainInterface"""
 	def __init__(self):
@@ -14,19 +17,19 @@ class TkinterMainInterface(object):
 
 		# A Method: Get a Original Movie File
 		def GetOriginalFile():
-			aOriginalPathVar.set("")
+			self.mOriginalPathVar.set("")
 			aOriginalFilePath = tkFileDialog.askdirectory(title = "Choose The Original Movie Path");
 			try:
-				aOriginalPathVar.set(aOriginalFilePath)
+				self.mOriginalPathVar.set(aOriginalFilePath)
 			except Exception, e:
 				raise e
 			pass
 
 		def GetStoreFile():
-			aStorePathVar.set("")
+			self.mStorePathVar.set("")
 			aStoreFilePath = tkFileDialog.askdirectory(title = "Choose The Store Split Movies Path")
 			try:
-				aStorePathVar.set(aStoreFilePath)
+				self.mStorePathVar.set(aStoreFilePath)
 			except Exception, e:
 				raise e
 			pass
@@ -34,8 +37,8 @@ class TkinterMainInterface(object):
 		# First Line
 		aFirstLineFrame        = Frame(self.mInterface);
 		aFirstLineLabel        = Label(aFirstLineFrame, text = "The Movie File: ")
-		aOriginalPathVar       = StringVar();
-		aOriginalEntry         = Entry(aFirstLineFrame, bd = 5, textvariable = aOriginalPathVar);
+		self.mOriginalPathVar  = StringVar();
+		aOriginalEntry         = Entry(aFirstLineFrame, bd = 5, textvariable = self.mOriginalPathVar);
 		aGetOriginalFileButton = Button(aFirstLineFrame, text = "select", command = GetOriginalFile);
 		aFirstLineLabel.pack(side = LEFT);
 		aOriginalEntry.pack(fill = BOTH);
@@ -44,15 +47,25 @@ class TkinterMainInterface(object):
 		# Second Line
 		aSecondLineFrame    = Frame(self.mInterface);
 		aSecondLineLabel    = Label(aSecondLineFrame, text = "The Store File: ");
-		aStorePathVar       = StringVar();
-		aStoreEntry         = Entry(aSecondLineFrame, bd = 5, textvariable = aStorePathVar);
+		self.mStorePathVar  = StringVar();
+		aStoreEntry         = Entry(aSecondLineFrame, bd = 5, textvariable = self.mStorePathVar);
 		aGetStoreFileButton = Button(aSecondLineFrame, text = "select", command = GetStoreFile)
 		aSecondLineLabel.pack(side = LEFT);
 		aStoreEntry.pack(fill = BOTH)
 		aGetStoreFileButton.pack(fill = BOTH)
-		
+
+		# Third Line
+		aThirdLineFrame       = Frame(self.mInterface);
+		aThirdLineLabel       = Label(aThirdLineFrame, text = 'The Movie Type:');
+		self.mSelectMovieType = StringVar();
+		self.mSelectMovieType.set("mp4");
+		aMovieOptionMenu      = OptionMenu(aThirdLineFrame, self.mSelectMovieType, "mp4", "avi", "ogv", "webm")
+		aThirdLineLabel.pack(side = LEFT);
+		aMovieOptionMenu.pack(fill = BOTH);
+
 		aFirstLineFrame.pack(side = TOP, fill = BOTH)
 		aSecondLineFrame.pack(side = TOP, fill = BOTH)
+		aThirdLineFrame.pack(side = TOP, fill = BOTH)
 
 	def show(self):
 		self.mInterface.mainloop();
