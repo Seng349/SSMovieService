@@ -1,11 +1,16 @@
 from MovieService.MovieSplit import SSMovieEditor;
 from UploadService.GithubUpload import GithubUploadService;
-from GUIService.TkinterService import TkinterInterface;
+from GUIService.TkinterService import TkinterMainInterface;
 import os;
 import string;
 
 
-aInterface = TkinterInterface();
+def SplitMoviesStart(aOriginalMoviePath, aStoreMoviePath, aSplitMoviesCount, aMovieType):
+	
+	pass
+
+aInterface = TkinterMainInterface();
+aInterface.set_callback(SplitMoviesStart)
 aInterface.show();
 
 # aOriginalMoviePath   = input("The Original Movie Path:");

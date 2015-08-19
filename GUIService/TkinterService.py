@@ -1,6 +1,7 @@
 import Tkinter;
 from Tkinter import *;
 import tkFileDialog
+import string;
 
 class TkinterMainInterface(object):
 	mInterface           = 0;
@@ -8,6 +9,7 @@ class TkinterMainInterface(object):
 	mStorePathVar        = 0;
 	mSelectMovieType     = 0;
 	mSplitMoviesCountVar = 0;
+	mCallBack            = 0;
 
 	"""docstring for TkinterMainInterface"""
 	def __init__(self):
@@ -33,6 +35,16 @@ class TkinterMainInterface(object):
 				self.mStorePathVar.set(aStoreFilePath)
 			except Exception, e:
 				raise e
+			pass
+
+		def ClickStartService():
+			if self.mCallBack:
+				aOriginalFilePath = self.mOriginalPathVar.get();
+				aStoreFilePath    = self.mStorePathVar.get();
+				aSplitMovieCount  = string.atoi(self.mSplitMoviesCountVar.get())
+				aSplitMovieType   = self.mSelectMovieType.get()
+				self.mCallBack(aOriginalFilePath, aStoreFilePath, aSplitMovieCount, aSplitMovieType);
+				pass
 			pass
 
 		# First Line
@@ -76,15 +88,22 @@ class TkinterMainInterface(object):
 		aSplitMoviesCountEntry.pack(fill = BOTH);
 		aSplitMoviesCountOptionMenu.pack(fill = BOTH);
 
+		# Bottom Line
+		aBottomLineFrame    = Frame(self.mInterface, bg = "#00CCFF")
+		aStartServiceButton = Button(aBottomLineFrame, text = "Start Service", command = ClickStartService, bg = "#00CCFF")
+		aStartServiceButton.pack(fill = BOTH)
+
 		aFirstLineFrame.pack(side = TOP, fill = BOTH)
 		aSecondLineFrame.pack(side = TOP, fill = BOTH)
 		aThirdLineFrame.pack(side = TOP, fill = BOTH)
 		aFourthLineFrame.pack(side = TOP, fill = BOTH)
+		aBottomLineFrame.pack(side = BOTTOM, fill = BOTH)
+
+	def set_callback(self, func_callback):
+		self.mCallBack = func_callback;
+		pass
 
 	def show(self):
 		self.mInterface.mainloop();
 		pass
 
-
-aInterface = TkinterMainInterface();
-aInterface.show();
