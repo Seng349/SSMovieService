@@ -2,14 +2,21 @@ import Tkinter;
 from Tkinter import *;
 import tkFileDialog
 import string;
+import sys;
+import tkMessageBox;
+
+# encode
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 class TkinterMainInterface(object):
-	mInterface           = 0;
-	mOriginalPathVar     = 0;
-	mStorePathVar        = 0;
-	mSelectMovieType     = 0;
-	mSplitMoviesCountVar = 0;
-	mCallBack            = 0;
+	mInterface            = 0;
+	mOriginalPathVar      = 0;
+	mOriginalMovieTypeVar = 0;
+	mStorePathVar         = 0;
+	mSelectMovieType      = 0;
+	mSplitMoviesCountVar  = 0;
+	mCallBack             = 0;
 
 	"""docstring for TkinterMainInterface"""
 	def __init__(self):
@@ -39,11 +46,14 @@ class TkinterMainInterface(object):
 
 		def ClickStartService():
 			if self.mCallBack:
-				aOriginalFilePath = self.mOriginalPathVar.get();
-				aStoreFilePath    = self.mStorePathVar.get();
-				aSplitMovieCount  = string.atoi(self.mSplitMoviesCountVar.get())
-				aSplitMovieType   = self.mSelectMovieType.get()
-				self.mCallBack(aOriginalFilePath, aStoreFilePath, aSplitMovieCount, aSplitMovieType);
+				aOriginalFilePath  = self.mOriginalPathVar.get();
+				aStoreFilePath     = self.mStorePathVar.get();
+				aSplitMovieCount   = string.atoi(self.mSplitMoviesCountVar.get())
+				aSplitMovieType    = self.mSelectMovieType.get()
+				aOriginalMovieType = self.mOriginalMovieTypeVar.get();
+
+				print aOriginalFilePath;
+				self.mCallBack(aOriginalFilePath, aStoreFilePath, aSplitMovieCount, aSplitMovieType, aOriginalMovieType);
 				pass
 			pass
 
@@ -88,6 +98,15 @@ class TkinterMainInterface(object):
 		aSplitMoviesCountEntry.pack(fill = BOTH);
 		aSplitMoviesCountOptionMenu.pack(fill = BOTH);
 
+		# Fifth Line
+		aFifthLineFrame            = Frame(self.mInterface, bg = "#006633");
+		aFifthLineLabel            = Label(aFifthLineFrame, text = "The Original Movie Type: ", bg = "#006633")
+		self.mOriginalMovieTypeVar = StringVar();
+		aOriginalMovieTypeEntry    = Entry(aFifthLineFrame, bd = 5, textvariable = self.mOriginalMovieTypeVar, bg = "#006633")
+		self.mOriginalMovieTypeVar.set("");
+		aFifthLineLabel.pack(side = LEFT)
+		aOriginalMovieTypeEntry.pack(fill = BOTH)
+
 		# Bottom Line
 		aBottomLineFrame    = Frame(self.mInterface, bg = "#00CCFF")
 		aStartServiceButton = Button(aBottomLineFrame, text = "Start Service", command = ClickStartService, bg = "#00CCFF")
@@ -97,10 +116,15 @@ class TkinterMainInterface(object):
 		aSecondLineFrame.pack(side = TOP, fill = BOTH)
 		aThirdLineFrame.pack(side = TOP, fill = BOTH)
 		aFourthLineFrame.pack(side = TOP, fill = BOTH)
+		aFifthLineFrame.pack(side = TOP, fill = BOTH)
 		aBottomLineFrame.pack(side = BOTTOM, fill = BOTH)
 
 	def set_callback(self, func_callback):
 		self.mCallBack = func_callback;
+		pass
+
+	def showAlertView(self, aMessageStr):
+		tkMessageBox.showinfo("Warning", aMessageStr);
 		pass
 
 	def show(self):

@@ -5,29 +5,40 @@ import os;
 import string;
 
 
-def SplitMoviesStart(aOriginalMoviePath, aStoreMoviePath, aSplitMoviesCount, aMovieType):
+def SplitMoviesStart(aOriginalMoviePath, aStoreMoviePath, aSplitMoviesCount, aMovieType, aOriginalMovieType):
+	if not os.path.exists(aOriginalMoviePath):
+		aInterface.showAlertView("The Original Movie Path can't be empty !!!")
+		return;
+
+	if not aStoreMoviePath:
+		aInterface.showAlertView("The Store Movie Path can't be empty !!!")
+		return;
+
+	if aSplitMoviesCount <= 0:
+		aInterface.showAlertView("The Split Movies Count can't be negative !!!");
+		return;
+
+	if cmp(aOriginalMovieType, ''):
+		aInterface.showAlertView("The Original Movie Type can't be empty !!!")
+		return;
+
+	if not os.path.exists(aOriginalMoviePath):
+		aInterface.showAlertView("The Original Movie Path not exit !!!");
+		return;
+
+	if not os.path.exists(aStoreMoviePath):
+		os.makedirs(aStoreMoviePath);
+		pass
+
 	
+
 	pass
 
 aInterface = TkinterMainInterface();
 aInterface.set_callback(SplitMoviesStart)
 aInterface.show();
 
-# aOriginalMoviePath   = input("The Original Movie Path:");
-# aStoreMoviePath      = input("The Store Split Movies Path:");
-# aSplitMoviesCountStr = input('The Split Movies Count:');
-# aSplitMovieType      = input('The Split Movies Type(just mp4, avi, ogv, webm)')
 
-# if os.path.exists(aOriginalMoviePath):
-
-# 	# if Store File not Exit, create it
-# 	if os.path.exists(aStoreMoviePath):
-# 		os.makedirs(aStoreMoviePath);
-# 		pass
-
-# 	aSplitMoviesCount = string.atoi(aSplitMoviesCountStr);
-
-# 	pass;
 
 
 # aGithubService = GithubUploadService(aStoreMoviePath);
