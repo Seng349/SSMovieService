@@ -4,18 +4,33 @@ import os;
 
 class SSMovieEditor(object):
 	"""docstring for SSMovieEditor"""
-	mMovie    = 0;
-	mFileName = '';
+	mMovie       = 0;
+	mFileName    = '';
+	mReadSuccess = 0;
 
 	def __init__(self, originalMoviePath):
 		super(SSMovieEditor, self).__init__()
-		self.mMovie    = SSMovie.VideoFileClip(originalMoviePath);
-		self.mFileName = os.path.basename(originalMoviePath);
+
+		try:
+			self.mMovie       = SSMovie.VideoFileClip(originalMoviePath);
+			self.mFileName    = os.path.basename(originalMoviePath);
+			self.mReadSuccess = YES;
+		except Exception, e:
+			self.mReadSuccess = NO;
+			raise e
 
 		pass;
 
+	def GetIsReadSuccess(self):
+		return self.mReadSuccess;
+		pass
+
 	""" Split Movie to sub Movies """	
 	def SplitMoviesToFile(self, splitCount, fileType, storeMoviePath):
+
+		if not self.mReadSuccess:
+			return;
+
 		aMovieDuration = self.mMovie.duration;
 		aSplitTime     = aMovieDuration / splitCount;
 		aFileName      = os.path.splitext(self.mFileName)[0];
@@ -40,6 +55,9 @@ class SSMovieEditor(object):
 
 	# Movie Type: mp4 avi ogv webm
 	def SubClipToFile(self, beginTime, endTime, subClipFileName, fileType, storeMoviePath):
+
+		if not self.mReadSuccess:
+			return;
 
 		# if store file not exit, create it.
 		if os.path.exists(storeMoviePath) == False:

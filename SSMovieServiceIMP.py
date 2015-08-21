@@ -1,44 +1,47 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+import os, sys
+
 from MovieService.MovieSplit import SSMovieEditor;
 from UploadService.GithubUpload import GithubUploadService;
-from GUIService.TkinterService import TkinterMainInterface;
+from GUIService.MainInterface import MainInterface;
 import os;
 import string;
 
+def SplitMoviesStart(aOriginalMoviePath, aStoreMoviePath, aSplitMoviesCount, aMovieType, aGithubFilePath, aGithubCommitMessage):
+	# if not os.path.exists(aOriginalMoviePath):
+	# 	aInterface.showAlertView("The Original Movie Path can't be empty !!!")
+	# 	return;
 
-def SplitMoviesStart(aOriginalMoviePath, aStoreMoviePath, aSplitMoviesCount, aMovieType, aOriginalMovieType):
-	if not os.path.exists(aOriginalMoviePath):
-		aInterface.showAlertView("The Original Movie Path can't be empty !!!")
-		return;
+	# if not aStoreMoviePath:
+	# 	aInterface.showAlertView("The Store Movie Path can't be empty !!!")
+	# 	return;
 
-	if not aStoreMoviePath:
-		aInterface.showAlertView("The Store Movie Path can't be empty !!!")
-		return;
+	# if aSplitMoviesCount <= 0:
+	# 	aInterface.showAlertView("The Split Movies Count can't be negative !!!");
+	# 	return;
 
-	if aSplitMoviesCount <= 0:
-		aInterface.showAlertView("The Split Movies Count can't be negative !!!");
-		return;
+	# if not os.path.exists(aOriginalMoviePath):
+	# 	aInterface.showAlertView("The Original Movie Path not exit !!!");
+	# 	return;
 
-	if cmp(aOriginalMovieType, ''):
-		aInterface.showAlertView("The Original Movie Type can't be empty !!!")
-		return;
-
-	if not os.path.exists(aOriginalMoviePath):
-		aInterface.showAlertView("The Original Movie Path not exit !!!");
-		return;
-
-	if not os.path.exists(aStoreMoviePath):
-		os.makedirs(aStoreMoviePath);
-		pass
+	# if not os.path.exists(aStoreMoviePath):
+	# 	os.makedirs(aStoreMoviePath);
+	# 	pass
 
 	
+	if len(aGithubFilePath) > 0:
+		print 'updating'
+		aGithubService = GithubUploadService(aGithubFilePath);
+		aGithubService.upload(aGithubCommitMessage)
+		pass
+
 
 	pass
 
-aInterface = TkinterMainInterface();
+aInterface = MainInterface();
 aInterface.set_callback(SplitMoviesStart)
 aInterface.show();
-
-
 
 
 # aGithubService = GithubUploadService(aStoreMoviePath);

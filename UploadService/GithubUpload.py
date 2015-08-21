@@ -11,10 +11,11 @@ class GithubUploadService(object):
 
 	def upload(self, aCommitMessage):
 		aGithubPath = self.mGithubPath;
+		aCommitStr  = "git commit -m " + "'" + aCommitMessage + "'"
 		os.system('cd $aGithubPath');
 		os.system('git pull origin');
 		os.system('git add ./');
-		os.system('git commit -m "$aCommitMessage"')
+		os.system(aCommitStr)
 		os.system('git push origin master');
 
 		pass
