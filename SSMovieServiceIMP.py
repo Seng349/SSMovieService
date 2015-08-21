@@ -32,10 +32,11 @@ def SplitMoviesStart(aOriginalMoviePath, aStoreMoviePath, aSplitMoviesCount, aMo
 
 	for aFileName in os.listdir(aOriginalMoviePath):
 		aFilePath = ''
-		if cmp(aOriginalMoviePath[len(aOriginalMoviePath) - 1:], '/')
+		if not cmp(aOriginalMoviePath[len(aOriginalMoviePath) - 1:], '/'):
 			aFilePath = aOriginalMoviePath + aFileName;
 			pass
 		else:
+			print 'no'
 			aFilePath = aOriginalMoviePath + '/' + aFileName;
 			pass;
 
